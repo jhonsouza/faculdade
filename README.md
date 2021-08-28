@@ -187,3 +187,134 @@ int main(){
     }while (parteint > 0);
 }
 ```
+# revisar o programa 6
+## Programa 6
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+
+
+int main(){
+    setlocale(LC_ALL, "Portuguse");
+    int n,*od,*gl,i;
+    int totalq=0,totall=0;
+    float qpl=0,ppq=0,*p,precototal=0;
+
+    printf("Informe a quantidade de paradas para reabastecer\n");
+    scanf("%d", &n);
+    system("clear");
+    od = (int *)malloc(n * sizeof(int));
+    gl = (int *)malloc(n * sizeof(int));
+    p = (float *)malloc(n * sizeof(float));
+
+    
+    for(i=1;i <= n;i++){
+        printf("informe a quilometragem rodada\n");
+        scanf("%d",&od[i]);
+        printf("informe a quantidade de litros abastecidos\n");
+        scanf("%d",&gl[i]);
+        printf("infome o valor pago\n");
+        scanf("%f",&p[i]);
+        system("clear");
+    }
+    for(i=1;i <= n;i++){
+        totall += gl[i];
+        totalq += od[i];
+        precototal+=p[i];
+        if(i%2==0){
+            printf("Quantidade quilometros andados por litro a cada duas paradas é %d\n",totalq/totall);
+        }
+    }
+    qpl = totalq/totall;
+    ppq = precototal/totalq;
+    printf("Quilometros %d, Litros %d, Preço %.2f \n",totalq,totall,precototal);
+    printf("Quilometros por litros: %.2f, Custo do combustível por quilometro: %.2f\n",qpl,ppq);
+    
+}
+```
+
+## Programa 7 
+```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h> 
+
+float average;
+typedef struct studants{
+    char name[40];
+    double grades;
+}datastudants;
+
+datastudants studants[50];
+datastudants top5[5];
+
+void GetData(){
+    int i;
+    for(i=0;i<10;i++){
+        printf("write the studant name: ");
+        scanf("%s", studants[i].name);
+        printf("write the studant grades: ");
+        scanf("%lf", &(studants[i].grades));
+    }
+    
+}
+void GetAverage(){
+    float sum=0;
+    for (int i = 0; i < 10; i++){
+        sum += studants[i].grades;
+    }
+    average = sum/10;
+}
+void SelectStudants(){
+    double auxgrades;
+    char auxname[40];
+    for (int i = 0; i < 10; i++){
+        if(studants[i].grades>average){
+            for (int k = 0; k < 5; k++){
+                if (top5[k].grades == 0){
+                    auxgrades = top5[k].grades;
+                    strcpy(auxname,top5[k].name);
+                    top5[k].grades = studants[i].grades;
+                    strcpy(top5[k].name,studants[i].name);
+                    studants[i].grades = auxgrades;
+                    strcpy(studants[i].name,auxname);
+                }
+                else if (studants[i].grades > top5[k].grades){
+                    auxgrades = top5[k].grades;
+                    strcpy(auxname,top5[k].name);
+                    top5[k].grades = studants[i].grades;
+                    strcpy(top5[k].name,studants[i].name);
+                    studants[i].grades = auxgrades;
+                    strcpy(studants[i].name,auxname);
+                }
+                
+            }
+            
+
+        }
+    }
+
+}
+void PrintStudants(){
+    printf("The best studants above average: %2.2f", average);
+    printf("\n-----------------------------\n");
+    for (int i = 0; i < 5; i++){
+
+        printf("name: %s, grade: %lf \n", top5[i].name, top5[i].grades);
+        
+    }
+    
+}
+int main(){
+    
+    GetData();
+    GetAverage();
+    SelectStudants();
+    PrintStudants();
+}
+```
