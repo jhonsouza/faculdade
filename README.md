@@ -318,3 +318,132 @@ int main(){
     PrintStudants();
 }
 ```
+
+## Programa 8 
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <locale.h>
+
+
+
+int main(){
+    setlocale(LC_ALL, "Portuguese");
+    int vetor[50],i,LargeOne=0,LargeTwo=0;
+
+    srand(time(0));
+    for (i=0;i<50;i++){
+        vetor[i]=(rand()%1000);
+        printf("%d \t",vetor[i]);
+    }
+    i=0;
+    while (i < 50){
+        if (LargeOne < vetor[i]){
+            LargeTwo = LargeOne;
+            LargeOne = vetor[i];
+        }
+        else if(LargeTwo < vetor[i]){
+            LargeTwo = vetor[i];
+        }
+        i++;
+    }
+    printf("\no primeiro maior número é: %d\n",LargeOne);
+    printf("o segundo maior número é: %d\n",LargeTwo);
+    
+}
+```
+
+## Programa 9 
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+
+
+int main(){
+    char cad[80];
+    int tam,i,space=0,j,rep=0;
+    int total;
+
+
+    setlocale(LC_ALL, "Portuguese");
+
+    printf("digite uma palavra de até 80 caracteres: ");
+    fgets(cad,80,stdin);
+
+    if(strlen(cad)>80){
+        printf("A palavra é maior que 80 caracteres\n");
+        return main();
+    }
+    
+    tam=strlen(cad);
+
+    for (i=0; cad[i]!='\n';i++){
+        if (cad[i] == ' '){
+            space++;
+        }
+    }
+
+    for(i=0; cad[i]!='\0';i++){
+        for(j=0; cad[j]!='\0';j++){
+            if(cad[i] == cad[j] && j != i){
+                rep++;
+                break;
+            }
+        }
+    }
+    rep -= space;
+    total = tam - space - rep;
+
+    printf("%d tam \t %d space \t %d rep \t",tam,space,rep);
+    printf ("\ntotal de letras distintas é %d ",total);
+    
+
+}
+```
+
+## Programa 10
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+	char* p;
+}word;
+
+void main(){
+	char palavra[80] = "banana banana uva mec mec";
+	int i = 0;
+	int j,z;
+	word p[80];
+	
+	char* teste = strtok(palavra," ");
+	while(teste != NULL){
+		p[i].p = teste;	
+		teste = strtok(NULL," ");
+		i++;
+	} 
+
+	int rep[80] = {0};
+	for(j = 0; j < i; j++){
+		printf("\n");
+		for(z = 0; z < i; z++){
+			if(j != z && strcmp(p[j].p,p[z].p) == 0){
+				rep[j]++;
+				
+			}
+		}
+	}
+	
+	for(j = 0; j < i;j++){
+		printf("palavra: %s",p[j].p);
+		printf(" Repeticoes: %d",rep[j]);
+		printf("\n");
+	}
+
+}
+```
