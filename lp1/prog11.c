@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <locale.h>
 
+int pos=0;
 typedef struct text
 {
     char text[88][88];
@@ -10,11 +12,12 @@ typedef struct text
 }wordtext;
 wordtext words;
 
+
 void GetText(){
     
     FILE* arq;
     char c;
-    int i=0,j=0;
+    int i=0, j=0;
     if((arq = fopen("prog11.txt", "r")) == NULL){
         printf("Falha ao abrir o arquivo");
     }
@@ -30,17 +33,13 @@ void GetText(){
         }
     }
     fclose(arq);
-    for (int i = 0; i < 88; i++)
-    {
-        printf("\n%s",words.text[i]);
-    }
     
 }
 void CountVowels(){
-    int count =0, pos=0;
+    int count =0;
     for (int i = 0; i < 88; i++){
         count=0;
-        for (int k = 0; k < strlen(words.text[i]); i++){
+        for (int k = 0; k < strlen(words.text[i]); k++){
             switch (words.text[i][k]){
             case 'a':
                 count+=1;
@@ -76,7 +75,6 @@ void CountVowels(){
                 break;
             }
         }
-        printf("%d",count);
         if(count>2){
             strcpy(words.word[pos],words.text[i]);
             pos++;
@@ -86,15 +84,15 @@ void CountVowels(){
     
 }
 void PrintWords(){
-    //size_t n = sizeof(words.word)/sizeof(char);
-    for (int i = 0; i < 88; i++){
-        printf("\n Word: %s",words.word[i]);
+    
+    for (int i = 0; i < pos; i++){
+        printf("Word: %s \n",words.word[i]);
     }
     
 }
 
 int main(){
-
+    setlocale(LC_ALL, "Portuguese");
     GetText();
     CountVowels();
     PrintWords();
