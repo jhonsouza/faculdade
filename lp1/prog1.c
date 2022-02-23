@@ -1,27 +1,29 @@
 #include <stdio.h>
-#include <locale.h>
 
+int main()
+{
+    int n[10], aux, i, j;
 
-
-int main(){
-    setlocale(LC_ALL, "Portuguese");
-    int n,i;
-   
-    n=0;
-    i=1;
-    while (n==0){
-       if (i%3 == 2 && i%5 == 3 && i%7 == 4){
-        n = i;
-       }
-       else{
-        i++;
-       }
-      
+    for (i = 0; i < 10; i++)
+    {
+        printf("#====== numero %d ======#\n", i);
+        scanf("%d", &n[i]);
     }
-    printf("o resto de %d dividido por 3 é %d\n",n, n%3);
-    printf("o resto de %d dividido por 5 é %d\n",n, n%5);
-    printf("o resto de %d dividido por 7 é %d\n",n, n%7);
-    printf("o menor número positivo é %d\n", n);
-
-
+    for (i = 0; i < 9; i++)
+    {
+        for (j = 1; j < 10; j++)
+        {
+            if (n[j] < n[i])
+            {
+                aux = n[i];
+                n[i] = n[j];
+                n[j] = aux;
+            }
+        }
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        printf("#====== numero %d = %d ======#\n", i, n[i]);
+    }
+    return 0;
 }
