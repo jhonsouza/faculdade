@@ -64,7 +64,7 @@ void PrintStudants(){
     printf("\n-----------------------------\n");
     for (int i = 0; i < 5; i++){
 
-        printf("name: %s, grade: %lf \n", top5[i].name, top5[i].grades);
+        printf("name: %s, grade: %.1lf \n", top5[i].name, top5[i].grades);
         
     }
     

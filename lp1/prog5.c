@@ -15,8 +15,6 @@ int main(){
     scanf("%lf",&d);
     if (d > 1.0 || d < 0.01){
         printf("o valor informado é inválido \n");
-        sleep(20);
-        system("clear");
         return main();
     }
     

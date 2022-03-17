@@ -17,10 +17,10 @@ int main (){
         }
     }
     if (count == 2){
-        printf("valor %d informado é um número primo\n", n);
+        printf("%d é um número primo\n", n);
     }
     else{
-        printf("o valor %d informado não é um número primo\n", n);
+        printf("%d não é um número primo\n", n);
     }
     
 }
