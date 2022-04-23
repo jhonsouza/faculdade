@@ -7,7 +7,7 @@
 int no = 0,sd = 0, nd = 0,ceo = 0, sL = 0;
 #define n 2
 INFO inf;
-struct dados *prox, *ant;
+struct dados * prox, *ant;
 
 void lista(struct dados *p, int *x, char regiao[]){
     printf("#========= Lista dos Eventos na região %s =========#\n", regiao);
@@ -140,7 +140,8 @@ void editaEventos(struct dados *p, int *x, char regiao[]){
 }
 void regioes(){
     int escolha;
-    //struct dados *norte = (struct dados *)malloc(n * sizeof(struct dados));
+    prox = ant = NULL; //aterramento
+    struct dados *norte = (struct dados *)malloc(n * sizeof(struct dados));
     struct dados *nordeste = (struct dados *)malloc(n * sizeof(struct dados));
     struct dados *co = (struct dados *)malloc(n * sizeof(struct dados));
     struct dados *sudeste = (struct dados *)malloc(n * sizeof(struct dados));
@@ -149,6 +150,8 @@ void regioes(){
     printf("1- Norte\n2- Nordeste\n3- Centro-oeste\n4- Sudeste\n5- Sul\n");
     scanf("%d", &escolha);
     if (escolha == 1){
+        norte = (struct dados *)malloc(sizeof(struct dados));
+        norte -> anterior = norte->proximo = NULL;
         menu(&norte[no], &no, "norte");
     }
     else if (escolha == 2){

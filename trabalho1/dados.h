@@ -6,7 +6,7 @@ typedef
         char tipo[40];
         char qualidade[20];
         char resumo[1000];
-        struct dados *prox, *ant;
+        struct dados *proximo, *anterior;
     }INFO;
 
 void menu();
