@@ -4,36 +4,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-int no = 0,sd = 0, nd = 0,ceo = 0, sL = 0;
-#define n 2
+int no = 0,sd = 0, nd = 0,ceo = 0, sl = 0;
+#define n 100
 INFO inf;
-struct dados * prox, *ant;
-
-void lista(struct dados *p, int *x, char regiao[]){
+struct dados norte[n];
+struct dados nordeste[n];
+struct dados co[n];
+struct dados sudeste[n];
+struct dados sul[n];
+void lista(struct dados p[], int *x, char regiao[]){
     printf("#========= Lista dos Eventos na região %s =========#\n", regiao);
     for (int i =0; i< *x; i++){
         printf("#==== evento %d ====#\n", i);
-        printf("tipo: %s\n",p[*x].tipo);
-        printf("qualidade: %s\n",p[*x].qualidade);
-        printf("local: %s\n",p[*x].local);
-        printf("resumo: %s\n",p[*x].resumo);
+        printf("tipo: %s\n",p[i].tipo);
+        printf("qualidade: %s\n",p[i].qualidade);
+        printf("local: %s\n",p[i].local);
+        printf("resumo: %s\n",p[i].resumo);
     }
 }
-void listaEventos(struct dados *p, int *x, char regiao[]){
-    system("clear");
+void listaEventos(struct dados p[], int *x, char regiao[]){
+    system("clear||cls");
     printf("#========= Lista dos Eventos na região %s =========#\n", regiao);
     for (int i =0; i< *x; i++){
         printf("#==== evento %d ====#\n", i);
-        printf("tipo: %s\n",p[*x].tipo);
-        printf("qualidade: %s\n",p[*x].qualidade);
-        printf("local: %s\n",p[*x].local);
-        printf("resumo: %s\n",p[*x].resumo);
+        printf("tipo: %s\n",p[i].tipo);
+        printf("qualidade: %s\n",p[i].qualidade);
+        printf("local: %s\n",p[i].local);
+        printf("resumo: %s\n",p[i].resumo);
     }
     int escolha;
-    printf("1- criar um novo evento\n2- remover um evento\n3- editar um evento\n4- retonar ao menu\n5- retornar ao menu de regiões: ");
+    printf("1- criar um novo evento\n2- remover um evento\n3- editar um evento\n4- retornar ao menu de regiões: ");
     scanf("%d", &escolha);
     if (escolha == 1){
-        (*x)++;
         criaEventos(p ,x, regiao);
     }
     else if(escolha == 2){
@@ -42,10 +44,7 @@ void listaEventos(struct dados *p, int *x, char regiao[]){
     else if(escolha == 3){
         editaEventos(p, x, regiao);
     }  
-    else if(escolha == 24){
-        menu(p, x, regiao);
-    }
-    else if(escolha == 5){
+    else if(escolha == 4){
         regioes();
     }  
     else {
@@ -55,27 +54,65 @@ void listaEventos(struct dados *p, int *x, char regiao[]){
 }
 void criaEventos(struct dados *p, int *x, char regiao[]){
     char t;
+    int soma = no+ceo+sd+nd+sl;
+    if (soma == 100){
+        printf("capacidade máxima de eventos atingida\n retornando ao menu de região!\n");
+        regioes();
+    }
+    else{
+        system("clear||cls");
+        printf("%d\n", soma);
+        printf("#========= Criando um evento na região %s =========#\n", regiao);
+        printf("qual o tipo do evento?\n");
+        scanf("%s", p[*x].tipo);
+        printf("qual a qualidade do evento?\n");
+        scanf("%s", p[*x].qualidade);
+        printf("Qual o local do evento?\n");
+        t = getchar();
+        gets(p[*x].local);
+        printf("faça um breve resumo do evento:\n");
+        gets(p[*x].resumo);   
+        system("clear||cls");
+        *x+=1;
+        int escolha;
+        printf("1- criar um novo evento\n2- retonar ao menu\n3- retornar ao menu de regiões: ");
+        scanf("%d", &escolha);
+        if (escolha == 1){
+            criaEventos(p ,x, regiao);
+        }
+        else if(escolha == 2){
 
-    system("clear");
-    printf("%d", *x);
-    printf("#========= Criando um evento na região %s =========#\n", regiao);
-    printf("qual o tipo do evento?\n");
-    scanf("%s", p[*x].tipo);
-    printf("%s", p[*x].tipo);
-    printf("qual a qualidade do evento?\n");
-    scanf("%s", p[*x].qualidade);
-    printf("Qual o local do evento?\n");
-    t = getchar();
-    gets(p[*x].local);
-    printf("faça um breve resumo do evento:\n");
-    gets(p[*x].resumo);   
-    system("clear");
-    *x+=1;
+            menu(p, x, regiao);
+        }
+        else if(escolha == 3){
+            regioes();
+        }  
+        else {
+            printf("escolha inválida, retornando ao menu de regiões\n");
+            regioes();
+        }
+    }
+}
+void removeEventos(struct dados *p, int *x, char regiao[]){
+    int y;
+    printf("#========= Removendo um evento na região %s =========#\n", regiao);
+    lista(p, x, regiao);
+    printf("Qual evento deseja editar?\n");
+    scanf("%d", &y);
+    for (int i = y; i < *x; i++)
+    {
+        strcpy(p[i].local,p[i+1].local);
+        strcpy(p[i].qualidade,p[i+1].qualidade);
+        strcpy(p[i].resumo,p[i+1].resumo);
+        strcpy(p[i].tipo,p[i+1].tipo);
+    }
+    *x-=1;
+    lista(p, x, regiao);
     int escolha;
-    printf("1- criar um novo evento\n2- retonar ao menu\n3- retornar ao menu de regiões:");
+    printf("1- remover outro evento\n2- retonar ao menu\n3- retornar ao menu de regiões: ");
     scanf("%d", &escolha);
     if (escolha == 1){
-        criaEventos(p ,x, regiao);
+        removeEventos(p ,x, regiao);
     }
     else if(escolha == 2){
 
@@ -88,13 +125,12 @@ void criaEventos(struct dados *p, int *x, char regiao[]){
         printf("escolha inválida, retornando ao menu de regiões\n");
         regioes();
     }
-}
-void removeEventos(struct dados *p, int *x, char regiao[]){
-    printf("chegou aqui");
+
 }
 void editaEventos(struct dados *p, int *x, char regiao[]){
-    lista(p, x, regiao);
     int evento,alteracao;
+    printf("#========= Editando um evento na região %s =========#\n", regiao);
+    lista(p, x, regiao);
     printf("Qual evento deseja editar?\n");
     scanf("%d", &evento);
 
@@ -140,47 +176,40 @@ void editaEventos(struct dados *p, int *x, char regiao[]){
 }
 void regioes(){
     int escolha;
-    prox = ant = NULL; //aterramento
-    struct dados *norte = (struct dados *)malloc(n * sizeof(struct dados));
-    struct dados *nordeste = (struct dados *)malloc(n * sizeof(struct dados));
-    struct dados *co = (struct dados *)malloc(n * sizeof(struct dados));
-    struct dados *sudeste = (struct dados *)malloc(n * sizeof(struct dados));
-    struct dados *sul = (struct dados *)malloc(n * sizeof(struct dados));
-    printf("%d\n", no);
+    system("clear||cls");
+    printf("#========= Menu de Regiões =========#\n");
     printf("1- Norte\n2- Nordeste\n3- Centro-oeste\n4- Sudeste\n5- Sul\n");
     scanf("%d", &escolha);
     if (escolha == 1){
-        norte = (struct dados *)malloc(sizeof(struct dados));
-        norte -> anterior = norte->proximo = NULL;
-        menu(&norte[no], &no, "norte");
+        menu(&norte, &no, "norte");
     }
     else if (escolha == 2){
-        menu(&nordeste[0], &nd, "nordeste");
+        menu(&nordeste, &nd, "nordeste");
     }
     else if (escolha == 3)
     {
-        menu(&co[0], &ceo, "centro-oeste");
+        menu(&co, &ceo, "centro-oeste");
     }
     else if (escolha == 4)
     {
-        menu(&sudeste[0], &sd, "sudeste");
+        menu(&sudeste, &sd, "sudeste");
     }
     else if (escolha == 5)
     {
-        menu(&sul[0], &sL, "sul");
+        menu(&sul, &sl, "sul");
     }
     else{
         printf("Região inválida\n");
         sleep(3);
-        system("clear");
-        return regioes();
+        system("clear||cls");
+        return regioes(norte);
     }
 }
 
 void menu(struct dados *p, int *x, char regiao[]){
     int escolha;
-    system("clear");
-    printf("#======== menu de eventos ========#\n");
+    system("clear||cls");
+    printf("#======== menu de eventos da regiao %s========#\n", regiao);
     printf("1- criar um novo evento\n");
     printf("2- listar todos os eventos\n");
     printf("3- remover um evento\n");
@@ -216,7 +245,7 @@ void menu(struct dados *p, int *x, char regiao[]){
 
 int main(){
     
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "Portuguese");    
     regioes();
     /*menu(&p[0]);*/
 }
