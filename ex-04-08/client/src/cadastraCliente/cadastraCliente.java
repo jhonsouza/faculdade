@@ -26,8 +26,11 @@ public class cadastraCliente {
         if (op == 1) {
             if (p < qtde) {
                 cl[p] = new cliente();
-                System.out.println("nome do cliente");
-                cl[p].setName(sc.next());
+                System.out.println("primeiro nome do cliente");
+                cl[p].setFirstName(sc.next());
+                sc.nextLine();
+                System.out.println("Ultimo nome do cliente");
+                cl[p].setLastName(sc.next());
                 sc.nextLine();
                 System.out.println("Cpf do cliente");
                 cl[p].setCpf(sc.nextLine());
@@ -39,7 +42,6 @@ public class cadastraCliente {
                 cl[p].dadosCliente();
                 p += 1;
                 cadastraClientes(qtde, cl);
-
             } else {
                 System.out.println("Limite de cadastros atingido ");
             }
@@ -48,6 +50,7 @@ public class cadastraCliente {
             Boolean found;
             found = false;
             int i;
+            int opc;
             System.out.println("nome do cliente que deseja buscar");
             nameSearch = sc.next();
             for (i = 0; i < cl.length; i++) {
@@ -58,12 +61,27 @@ public class cadastraCliente {
             }
             if (found == true) {
                 System.out.println("cliente " + nameSearch + " encontrado!");
-                cl[i].dadosCliente();
+                System.out.println("\n======= Menu de informações =======");
+                System.out.println("\n 1- Ver dados do cliente");
+                System.out.println("\n 2- alterar dados do cliente");
+                System.out.println("\n 3- voltar ao menu");
+                opc = sc.nextInt();
+                if(opc == 1){
+                    cl[i].dadosCliente();
+                    cadastraClientes(qtde, cl);
+                }
+                else if(opc == 2){
+                    cl[i].alterarDadosCliente();
+                    cadastraClientes(qtde, cl);
+                }
+                else{
+                    cadastraClientes(qtde, cl);
+                }
             }
             else{
                 System.out.println("cliente " + nameSearch + " não encontrado!");
+                cadastraClientes(qtde, cl);
             }
-            cadastraClientes(qtde, cl);
         }
         else if(op == 3){
             for (int i = 0; i < cl.length; i++) {
